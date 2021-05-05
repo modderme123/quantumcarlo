@@ -57,11 +57,15 @@ function legendre(l: number, m: number) {
 }
 
 function sphericalHarmonics(l: number, m: number) {
-  const legendreOpt = legendre(l, m);
-  const prefix = (1 - (m & 1) * 2) * Math.sqrt(((2 * l + 1) * factorial(l - m)) / (4 * Math.PI * factorial(l + m)));
+  const absM = Math.abs(m);
+  const legendreOpt = legendre(l, absM);
+  const prefix =
+    (1 - (m & 1) * 2) *
+    (m == 0 ? 1 : Math.SQRT2) *
+    Math.sqrt(((2 * l + 1) * factorial(l - absM)) / (4 * Math.PI * factorial(l + absM)));
 
   return (theta: number, phi: number) => {
-    return prefix * legendreOpt(Math.cos(theta)) * Math.cos(m * phi);
+    return prefix * legendreOpt(Math.cos(theta)) * (m >= 0 ? Math.cos(m * phi) : Math.sin(absM * phi));
   };
 }
 
@@ -110,6 +114,11 @@ function tests() {
   const r = Math.hypot(x, y, z);
   const phi = Math.atan2(y, x);
   const theta = Math.acos(z / r);
+
+  console.log(
+    sphericalHarmonics(3, -3)(theta, phi),
+    ((1 / 4) * Math.sqrt(35 / (2 * Math.PI)) * (3 * x ** 2 - y ** 2) * y) / r ** 3
+  );
 
   console.log(
     waveFn(3, 1, 0)(r, theta, phi),
@@ -163,3 +172,9 @@ function animate() {
 }
 
 animate();
+
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.updateProjectionMatrix();
+});
