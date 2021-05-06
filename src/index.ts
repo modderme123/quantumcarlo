@@ -6,17 +6,17 @@ const gui = new dat.GUI();
 const params = {
   n: 3,
   l: 1,
-  m: 0,
-  threshold: 0.0001,
+  m: 1,
   scale: 30,
+  threshold: 0.0001,
   guesses: 500000,
 };
-gui.add(params, "n").onChange(go);
-gui.add(params, "l").onChange(go);
-gui.add(params, "m").onChange(go);
-gui.add(params, "threshold").onChange(go);
+gui.add(params, "n", 1).onChange(go).step(1).name("n (n>0)");
+gui.add(params, "l").onChange(go).step(1).name("l (0≤l&lt;n)");
+gui.add(params, "m").onChange(go).step(1).name("m (abs(m)≤l)");
 gui.add(params, "scale").onChange(go);
-gui.add(params, "guesses", 50000, 200000, 1).onChange(go);
+gui.add(params, "threshold").onChange(go);
+gui.add(params, "guesses", 1).onChange(go).step(1);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -129,6 +129,8 @@ function tests() {
 // tests();
 
 function go() {
+  params.l = Math.min(Math.max(params.l, 0), params.n - 1);
+  params.m = Math.min(Math.max(params.m, -params.l), params.l);
   const positions = [];
   const colors = [];
 
