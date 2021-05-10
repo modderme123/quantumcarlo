@@ -51,8 +51,8 @@ function choosei(n: number, k: number) {
 }
 
 function legendre(l: number, m: number) {
-  let prefix = (-1) ** m * 2 ** l;
-  let coeffs = [];
+  const prefix = (-1) ** m * 2 ** l;
+  const coeffs = [];
   for (let k = m; k <= l; k++) {
     coeffs.push((factorial(k) / factorial(k - m)) * choosei(l, k) * choosei((l + k - 1) / 2, l));
   }
@@ -79,7 +79,7 @@ function sphericalHarmonics(l: number, m: number) {
 }
 
 function laguerre(n: number, alpha: number) {
-  let coeffs = [];
+  const coeffs = [];
   for (let i = 0; i <= n; i++) {
     coeffs.push(choosei(n + alpha, n - i) / factorial(i));
   }
@@ -97,7 +97,7 @@ function waveFn(n: number, l: number, m: number) {
   const laguerreOpt = laguerre(n - l - 1, 2 * l + 1);
   const sphericalOpt = sphericalHarmonics(l, m);
   return (r: number, theta: number, phi: number) => {
-    let p = (2 * r) / (n * a0); //rho
+    const p = (2 * r) / (n * a0); //rho
 
     return sqrtThing * Math.exp(-p / 2) * p ** l * laguerreOpt(p) * sphericalOpt(theta, phi);
   };
@@ -108,9 +108,9 @@ function tests() {
   console.log(laguerre(3, 1)(6), 4);
   console.log(sphericalHarmonics(0, 0)(0, 0), 1 / (2 * Math.sqrt(Math.PI)));
 
-  let x = (Math.random() - 0.5) * params.scale;
-  let y = (Math.random() - 0.5) * params.scale;
-  let z = (Math.random() - 0.5) * params.scale;
+  const x = (Math.random() - 0.5) * params.scale;
+  const y = (Math.random() - 0.5) * params.scale;
+  const z = (Math.random() - 0.5) * params.scale;
 
   const r = Math.hypot(x, y, z);
   const phi = Math.atan2(y, x);
@@ -135,11 +135,11 @@ function go() {
   const positions = [];
   const colors = [];
 
-  let wave = waveFn(params.n, params.l, params.m);
+  const wave = waveFn(params.n, params.l, params.m);
   for (let i = 0; i < params.guesses; i++) {
-    let x = (Math.random() - 0.5) * params.scale;
-    let y = (Math.random() - 0.5) * params.scale;
-    let z = (Math.random() - 0.5) * params.scale;
+    const x = (Math.random() - 0.5) * params.scale;
+    const y = (Math.random() - 0.5) * params.scale;
+    const z = (Math.random() - 0.5) * params.scale;
 
     const r = Math.hypot(x, y, z);
     const phi = Math.atan2(y, x);
