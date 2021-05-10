@@ -27,20 +27,29 @@ camera.position.z = 150;
 const controls = new OrbitControls(camera, renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x050505);
+scene.background = new THREE.Color(0xe6f0ef);
 scene.fog = new THREE.Fog(0x050505, 150, 170);
 
 const geometry = new THREE.BufferGeometry();
 
 const a0 = 1; //5.29177210903e-11;
 
+function factorial(num: number) {
+  if (num <= 1) return 1;
+  for (let i = num - 1; i >= 1; i--) {
+    num *= i;
+  }
+  return num;
+}
+
 function choosei(n: number, k: number) {
-  var result = 1;
-  for (var i = 1; i <= k; i++) {
+  let result = 1;
+  for (let i = 1; i <= k; i++) {
     result *= (n + 1 - i) / i;
   }
   return result;
 }
+
 function legendre(l: number, m: number) {
   let prefix = (-1) ** m * 2 ** l;
   let coeffs = [];
@@ -81,14 +90,6 @@ function laguerre(n: number, alpha: number) {
     }
     return sum;
   };
-}
-
-function factorial(num: number) {
-  if (num <= 1) return 1;
-  for (var i = num - 1; i >= 1; i--) {
-    num *= i;
-  }
-  return num;
 }
 
 function waveFn(n: number, l: number, m: number) {
@@ -150,8 +151,8 @@ function go() {
 
     positions.push((x / params.scale) * 50, (y / params.scale) * 50, (z / params.scale) * 50);
 
-    if (waveOut > 0) colors.push(1, 0, 0);
-    else colors.push(0, 1, 0);
+    if (waveOut > 0) colors.push(0xd4 / 0xff, 0x94 / 0xff, 0x21 / 0xff);
+    else colors.push(0x88 / 0xff, 0xaf / 0xff, 0xa6 / 0xff);
   }
 
   geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
@@ -167,12 +168,9 @@ scene.add(points);
 
 function animate() {
   requestAnimationFrame(animate);
-
   controls.update();
-
   renderer.render(scene, camera);
 }
-
 animate();
 
 window.addEventListener("resize", () => {
