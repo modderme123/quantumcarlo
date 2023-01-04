@@ -7,7 +7,7 @@ const params = {
   n: 3,
   l: 1,
   m: 1,
-  scale: 30,
+  scale: 40,
   threshold: 0.0001,
   guesses: 500000,
 };
@@ -52,7 +52,7 @@ function choosei(n: number, k: number) {
 
 function legendre(l: number, m: number) {
   const prefix = (-1) ** m * 2 ** l;
-  const coeffs = [];
+  const coeffs: number[] = [];
   for (let k = m; k <= l; k++) {
     coeffs.push((factorial(k) / factorial(k - m)) * choosei(l, k) * choosei((l + k - 1) / 2, l));
   }
@@ -79,7 +79,7 @@ function sphericalHarmonics(l: number, m: number) {
 }
 
 function laguerre(n: number, alpha: number) {
-  const coeffs = [];
+  const coeffs: number[] = [];
   for (let i = 0; i <= n; i++) {
     coeffs.push(choosei(n + alpha, n - i) / factorial(i));
   }
@@ -132,8 +132,8 @@ function tests() {
 function go() {
   params.l = Math.min(Math.max(params.l, 0), params.n - 1);
   params.m = Math.min(Math.max(params.m, -params.l), params.l);
-  const positions = [];
-  const colors = [];
+  const positions: number[] = [];
+  const colors: number[] = [];
 
   const wave = waveFn(params.n, params.l, params.m);
   for (let i = 0; i < params.guesses; i++) {
@@ -147,7 +147,7 @@ function go() {
 
     const waveOut = wave(r, theta, phi);
 
-    if (waveOut * waveOut < params.threshold) continue;
+    if ((waveOut * waveOut) < Math.random() * params.threshold) continue;
 
     positions.push((x / params.scale) * 50, (y / params.scale) * 50, (z / params.scale) * 50);
 

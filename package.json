@@ -11,14 +11,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/dat.gui": "^0.7.6",
-    "@types/three": "^0.127.1",
-    "prettier": "^2.2.1",
-    "typescript": "^4.2.4",
-    "vite": "^2.2.3"
+    "@types/dat.gui": "^0.7.7",
+    "@types/three": "^0.148.0",
+    "prettier": "^2.8.1",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4"
   },
   "dependencies": {
-    "dat.gui": "^0.7.7",
-    "three": "^0.128.0"
+    "dat.gui": "^0.7.9",
+    "three": "^0.148.0"
   }
 }
